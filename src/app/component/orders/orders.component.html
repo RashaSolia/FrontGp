@@ -13,8 +13,8 @@
  </div>
 
 
-<div class="row justify-content-between ">
-  <div class="col-md-5  p-2 boxShadow mb-5">
+<div class="row justify-content-between">
+  <div class="col-md-5  p-2 boxShadow mb-5" *ngFor="let data of gettrip">
 <h2>
 trip
 </h2>
@@ -23,8 +23,8 @@ trip
 <div class="d-flex">
   <img src="../../../assets/Group 1000000746.png" alt="">
   <div class="d-flex flex-column px-2 text-center">
-    <p class=" fw-medium" >Marco polo</p>
- <div class="starIcon">
+    <p class=" fw-medium" >{{data.userName}}</p>
+     <div class="starIcon">
   <i class="fa-solid fa-star mx-1"></i>
   <i class="fa-solid fa-star mx-1"></i>
   <i class="fa-solid fa-star mx-1"></i>
@@ -33,10 +33,10 @@ trip
   </div>
 </div>
 <div class=" p-3 ">
-  <p>From :</p>
-  <p>To :</p>
-  <p>Arrival date: :</p>
-  <p>Kg Free: 4kg</p>
+  <p>From : {{data.fromCityName}}</p>
+  <p>To : {{data.toCityName}}</p>
+  <p>Arrival date: {{data.arrivalTime}}</p>
+  <p>Kg Free: {{data.availableKg}}</p>
 </div>
 </div>
 
@@ -51,44 +51,7 @@ trip
 
 
   </div>
-  <div class="col-md-5  p-2 boxShadow mb-5">
-    <h2>
-    trip
-    </h2>
-    <div class="d-flex justify-content-between align-items-center  py-3">
-    <div>
-    <div class="d-flex">
-      <img src="../../../assets/Group 1000000746.png" alt="">
-      <div class="d-flex flex-column px-2 text-center">
-        <p class=" fw-medium" >Marco polo</p>
-     <div class="starIcon">
-      <i class="fa-solid fa-star  "></i>
-      <i class="fa-solid fa-star mx-1"></i>
-      <i class="fa-solid fa-star mx-1"></i>
-      <i class="fa-solid fa-star "></i>
-     </div>
-      </div>
-    </div>
-    <div class=" p-3 ">
-      <p>From :</p>
-      <p>To :</p>
-      <p>Arrival date: :</p>
-      <p>Kg Free: 4kg</p>
-    </div>
-    </div>
-    
-    
-    <div class="d-flex flex-column justify-content-center align-items-center">
-      <img src="../../../assets/Medal.png" class="px-5" alt="">
-      <p class="smallTxt text-center">Recommended</p>
-    <button class="btn  sendBtn py-1 px-4 my-5 rounded-pill">Send request</button>
-    
-    </div>
-    </div>
-    
-    
-      </div>
-
+  
       <div class="col-md-5  p-2 boxShadow mb-5">
         <h2>
         Shipment
@@ -205,17 +168,14 @@ trip
          
       
         <div class="d-flex justify-content-center align-items-center">
-            <select class="form-select form-select-lg my-3 p-2" formControlName="countryNameFrom" aria-label=".form-select-lg example">
-              <option value="" disabled selected>Select Country</option>
-
-            <option  *ngFor="let data of cityarr" value="1"    [ngValue]="data"  >{{data.countryName}}</option>
-           </select>
+          <select class="form-select form-select-lg my-3 p-2" formControlName="countryNameFrom" aria-label=".form-select-lg example">
+            <option value="" disabled selected>Select Country</option>
+            <option *ngFor="let data of cityarr" [value]="data.countryName">{{ data.countryName }}</option>
+          </select>
       
-          <select class="form-select form-select-lg m-3 p-2" formControlName="fromCityName" aria-label=".form-select-lg example">
+           <select class="form-select form-select-lg m-3 p-2" formControlName="fromCityName" aria-label=".form-select-lg example">
             <option value="" disabled selected>Select City</option>
-
-            <option  *ngFor="let data of cityarr" value="1"  [ngValue]="data" >{{data.cityName}}</option>
-         
+            <option *ngFor="let data of cityarr" [value]="data.cityName">{{ data.cityName }}</option>
           </select>
         </div>
       </div>
@@ -227,12 +187,12 @@ trip
       
         <div class="d-flex justify-content-center align-items-center">
           <select class="form-select form-select-lg my-3 p-2" formControlName="countryNameTo" aria-label=".form-select-lg example">
-            <option  *ngFor="let data of cityarr" value="1" [ngValue]="data" >{{data.countryName}}</option>
-           </select>
+            <option *ngFor="let data of cityarr" [value]="data.countryName">{{ data.countryName }}</option>
+          </select>
+          
       
           <select class="form-select form-select-lg m-3 p-2" formControlName="toCityName" aria-label=".form-select-lg example">
-            <option  *ngFor="let data of cityarr" value="1" [ngValue]="data" >{{data.cityName}}</option>
-         
+            <option *ngFor="let data of cityarr" [value]="data.cityName">{{ data.cityName }}</option>
           </select>
         </div>
       </div>
@@ -257,88 +217,65 @@ trip
   <div *ngIf="selectedOption === '2'">
     
  
-   <form action="">
-    <div class="Categorty">
-  
-      <label for="" class="LabelGrey"> Categorty: </label>
-    
-      <select class="form-select form-select-lg my-3 p-2 w-50"  aria-label=".form-select-lg example">
-        <option value="1" selected>Categorty</option>
-        <option value="2">Categorty</option>
-      </select>
-  
-    </div>
-    
-    <div class="From">
-  
-      <label for="" class="LabelGrey"> From: </label>
-    
-      <div class="d-flex justify-content-center align-items-center">
-          <select class="form-select form-select-lg my-3 p-2" aria-label=".form-select-lg example">
-          <option value="1" selected>Country</option>
-          <option value="2">Shipment</option>
-        </select>
-    
-        <select class="form-select form-select-lg m-3 p-2" aria-label=".form-select-lg example">
-          <option value="1" selected>City</option>
-          <option value="2">Shipment</option>
-        </select>
-
- 
-      </div>
-      <input class="form-control form-control-lg my-3 w-75 p-2 fw-medium"  type="text" placeholder="Address" style="font-size: 16px;">
-
-
-    </div>
-    
-    
-
-    <div class="to">
-  
-      <label for="" class="LabelGrey"> To: </label>
-    
-      <div class="d-flex justify-content-center align-items-center">
-          <select class="form-select form-select-lg my-3 p-2" aria-label=".form-select-lg example">
-          <option value="1" selected>Country</option>
-          <option value="2">Shipment</option>
-        </select>
-    
-        <select class="form-select form-select-lg m-3 p-2" aria-label=".form-select-lg example">
-          <option value="1" selected>City</option>
-          <option value="2">Shipment</option>
+    <form action="" [formGroup]="Shipmentform" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+      <div class="Category">
+        <label for="" class="LabelGrey">Category:</label>
+        <select class="form-select form-select-lg my-3 p-2 w-50" aria-label=".form-select-lg example" formControlName="categoryName">
+          <option *ngFor="let data of categoreyarr" [value]="data.categoryName">{{data.categoryName}}</option>
         </select>
       </div>
-
-      <input class="form-control form-control-lg my-3 w-75 p-2 fw-medium"  type="text" placeholder="Address" style="font-size: 16px;">
-
-    </div>
-    
-    
-    
-    
-    <div class="ShipmentInfo">
-  
-      <label for="" class="LabelGrey"> Shipment Information: </label>
-    
-      <div class="d-flex justify-content-center align-items-center">
-        <input class="form-control form-control-lg my-3 w-50 p-2 fw-medium"  type="text" placeholder="Weight" style="font-size: 16px;">
-        <input class="form-control form-control-lg m-3 w-50 p-2 fw-medium"  type="text" placeholder="Price" style="font-size: 16px;">
- 
+      <div class="from">
+        <label for="" class="LabelGrey">From:</label>
+        <div class="d-flex justify-content-center align-items-center">
+          <select class="form-select form-select-lg my-3 p-2" formControlName="countryNameFrom" aria-label=".form-select-lg example">
+            <option value="" disabled selected>Country</option>
+            <option *ngFor="let data of cityarr" [value]="data.countryName">{{ data.countryName }}</option>
+          </select>
+          <select class="form-select form-select-lg m-3 p-2" formControlName="fromCityName" aria-label=".form-select-lg example">
+            <option value="" disabled selected>Select City</option>
+            <option *ngFor="let data of cityarr" [value]="data.cityName">{{ data.cityName }}</option>
+          </select>
+        </div>
       </div>
-
-      <input class="form-control form-control-lg my-3 w-75 p-2 fw-medium"  type="text" placeholder="Description" style="font-size: 16px;">
-
-    </div>
-
-
-  
-    <div class="reward">
-  
-      <label for="" class="LabelGrey">Reward: </label>
-      <input class="form-control form-control-lg my-3 w-75 p-1 fw-medium"  type="number" >
-    </div>
+      <div class="To">
+        <label for="" class="LabelGrey">To:</label>
+        <div class="d-flex justify-content-center align-items-center">
+          <select class="form-select form-select-lg my-3 p-2" formControlName="countryNameTo" aria-label=".form-select-lg example">
+            <option *ngFor="let data of cityarr" [value]="data.countryName">{{ data.countryName }}</option>
+          </select>
+          <select class="form-select form-select-lg m-3 p-2" formControlName="toCityName" aria-label=".form-select-lg example">
+            <option *ngFor="let data of cityarr" [value]="data.cityName">{{ data.cityName }}</option>
+          </select>
+        </div>
+      </div>
+      <div class="ShipmentInfo">
+        <label for="" class="LabelGrey">Shipment Information:</label>
+        <div class="d-flex justify-content-center align-items-center">
+          <input class="form-control form-control-lg my-3 w-50 p-2 fw-medium" type="text" placeholder="weight" style="font-size: 16px;" formControlName="weight">
+          <input class="form-control form-control-lg my-3 w-50 p-2 fw-medium" type="text" placeholder="Weight" style="font-size: 16px;" formControlName="productWeight">
+          <input class="form-control form-control-lg m-3 w-50 p-2 fw-medium" type="text" placeholder="Price" style="font-size: 16px;" formControlName="productPrice">
+        </div>
+        <input class="form-control form-control-lg my-3 w-75 p-2 fw-medium" type="text" placeholder="Description" style="font-size: 16px;" formControlName="productName">
+      </div>
+      <div class="reward">
+        <label for="" class="LabelGrey">Reward:</label>
+        <input class="form-control form-control-lg my-3 w-75 p-1 fw-medium" type="number" formControlName="reward">
+      </div>
+      <div class="dateOfRecieving">
+        <label for="" class="LabelGrey">Date Of Recieving:</label>
+        <input class="form-control form-control-lg my-3 w-75 p-1 fw-medium" type="date" formControlName="dateOfRecieving">
+      </div>
+      <div class="address">
+        <label for="" class="LabelGrey">Enter your Address:</label>
+        <input class="form-control form-control-lg my-3 w-75 p-1 fw-medium" type="text" formControlName="address">
+      </div>
+      <div class="image">
+        <label for="image" class="LabelGrey" >Enter your Product image:</label>
+        <input class="form-control form-control-lg my-3 w-75 p-1 " type="file" formControlName="image" accept="image/*">
+      </div>
+      <button class="btn addBtn py-2 px-5 m-3 rounded-pill" type="submit" [disabled]="Shipmentform.invalid">done</button>
+    </form>
     
-   </form>
       </div>
  
   

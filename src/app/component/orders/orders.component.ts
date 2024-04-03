@@ -4,21 +4,28 @@ import { NgbModal, NgbModalRef, ModalDismissReasons } from '@ng-bootstrap/ng-boo
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 import { AuthService } from '../Service/auth.service';
 import { TripServiceService } from '../Service/trip-service.service';
-
+import { IOrder } from '../../models/trip';
+import {  Observable ,of } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { DataService } from '../Service/data.service';
+ 
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.component.html',
   styleUrls: ['./orders.component.scss']
 })
 export class OrdersComponent implements OnInit {
+  orders?: IOrder[];
   message: string = '';
   closeResult = '';
   modalRef: NgbModalRef | undefined;
   secondModalRef: NgbModalRef | undefined; // Reference to the second modal
 
-  constructor(private modalService: NgbModal ,private _TripServiceService:TripServiceService,private _Auth:AuthService) {
-
+  constructor(private modalService: NgbModal ,private _TripServiceService:TripServiceService,private _Auth:AuthService,private _DataService:DataService) {
+this.getTrip()
     this.getCity()
+    this.getCategorey()
+    this.getshipment()
   }
   ngOnInit(): void {
     throw new Error('Method not implemented.');
@@ -94,7 +101,14 @@ getCity(){
 this.cityarr=Response
   })
 }
- 
+
+categoreyarr:any[]=[];
+getCategorey(){
+  this._TripServiceService.getCategorey().subscribe((Response)=>{
+    console.log(Response)
+this.categoreyarr=Response
+  })
+}
  
 Tripform:FormGroup=new FormGroup({
   availableKg:new FormControl(null),
@@ -106,29 +120,84 @@ Tripform:FormGroup=new FormGroup({
  
  
 })
+ 
+Shipmentform:FormGroup=new FormGroup({
+  reward:new FormControl(null),
+   dateOfRecieving:new FormControl(null),
+  fromCityName:new FormControl(null),
+  countryNameFrom:new FormControl(null),
+  toCityName:new FormControl(null),
+  countryNameTo:new FormControl(null),
+  address:new FormControl(null),
+  productName:new FormControl(null),
+  productPrice:new FormControl(null),
+  productWeight:new FormControl(null),
+  weight:new FormControl(null),
+  image:new FormControl(null),
+  categoryName:new FormControl(null),
+})
+ 
+  
 
 
-// logMessage() {
-//   this.message = this._Auth.sharedVariable;
-//   }
 createTrip(formData:FormGroup){
-   if (localStorage.getItem('userToken')!== null) {
-     console.log("createTrip",formData.value)
+  
+    console.log("createTrip",formData.value)
 this._TripServiceService.createTrip(formData.value).subscribe({
 next:(Response)=>{console.log(Response)},
 error:(err)=>{console.log(err)}
 })
 
-  }
-
-
-
-
-
+ 
 }
 
 
- 
+
+gettrip:any[]=[]
+getTrip(){
+  this._DataService.getTripData().subscribe((data)=>{
+    console.log(data.data)
+    this.gettrip=data.data
+  })
+}
+
+
+createShipment(formData: FormData) {
+  console.log("createShipment", formData);
+  this._TripServiceService.createShipment(formData).subscribe({
+    next: (Response) => { console.log(Response) },
+    error: (err) => { console.log(err) }
+  });
+}
+onSubmit() {
+  const formData = new FormData();
+  formData.append('reward', this.Shipmentform.get('reward')?.value);
+  formData.append('dateOfRecieving', this.Shipmentform.get('dateOfRecieving')?.value);
+  formData.append('fromCityName', this.Shipmentform.get('fromCityName')?.value);
+  formData.append('countryNameFrom', this.Shipmentform.get('countryNameFrom')?.value);
+  formData.append('toCityName', this.Shipmentform.get('toCityName')?.value);
+  formData.append('countryNameTo', this.Shipmentform.get('countryNameTo')?.value);
+  formData.append('address', this.Shipmentform.get('address')?.value);
+  formData.append('productName', this.Shipmentform.get('productName')?.value);
+  formData.append('productPrice', this.Shipmentform.get('productPrice')?.value);
+  formData.append('productWeight', this.Shipmentform.get('productWeight')?.value);
+  formData.append('weight', this.Shipmentform.get('weight')?.value);
+  formData.append('image', this.Shipmentform.get('image')?.value);
+  formData.append('categoryName', this.Shipmentform.get('categoryName')?.value);
+
+
+  formData.forEach((value, key) => {
+    console.log(key + ': ' + value);
+  });
+  this.createShipment(formData);
+
+}
+getShipment:any[]=[]
+getshipment(){
+  this._DataService.getShipmentData().subscribe((data)=>{
+    console.log(data.data)
+    this.getShipment=data.data
+  })
+}
   
 }
- 

@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators,AbstractControl } from '@angular/forms';
 import { AuthService } from '../Service/auth.service';
- 
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.scss']
 })
 export class SignUpComponent {
-  constructor(private _Auth:AuthService){}
+  constructor(private _Auth:AuthService, private _Router:Router){}
   errormassege:string=""
   isLoading:boolean=false
 
@@ -41,6 +41,7 @@ signUp(registerForm:FormGroup){
  this._Auth.signUp(this.resgisterForm.value).subscribe({
   next:(Response)=>{console.log(Response)
     this.isLoading=false
+    this._Router.navigate(["./home"]);
   },
   error:(err)=>{
     // this.errormassege=err.error.errors

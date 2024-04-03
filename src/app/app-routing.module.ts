@@ -5,6 +5,7 @@ import { AddOrderComponent } from './component/add-order/add-order.component';
  import { DealsComponent } from './component/deals/deals.component';
 import { ForgotPasswordComponent } from './component/forgot-password/forgot-password.component';
 import { HomeComponent } from './component/home/home.component';
+import { MyTripComponent } from './component/my-trip/my-trip.component';
 import { OrdersComponent } from './component/orders/orders.component';
 import { ResetPasswordComponent } from './component/reset-password/reset-password.component';
 import { SignUpComponent } from './component/sign-up/sign-up.component';
@@ -22,6 +23,7 @@ const routes: Routes = [
   { path: 'resetPassword', component: ResetPasswordComponent },
   { path: 'addOrder',  canActivate:[AuthGuard],component: AddOrderComponent },
   { path: 'notification', canActivate:[AuthGuard], component:NotificationComponent },
+  { path: 'myTrip', canActivate:[AuthGuard], component:MyTripComponent },
 ];
 
 @NgModule({

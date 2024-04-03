@@ -17,15 +17,16 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NotificationComponent } from './notification/notification.component';
-import { HttpClientModule } from '@angular/common/http';
-
-
+import { HttpClientModule,HTTP_INTERCEPTORS } from '@angular/common/http';
+import { JwtInterceptor } from '../interceptors/jwt.interceptor';
+import { MyTripComponent } from './component/my-trip/my-trip.component';
+ 
 
 @NgModule({
   declarations: [
     AppComponent,
-    SigninComponent,
     SignUpComponent,
+    SigninComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
     HomeComponent,
@@ -35,6 +36,8 @@ import { HttpClientModule } from '@angular/common/http';
     DealsComponent,
     AddOrderComponent,
     NotificationComponent,
+    MyTripComponent
+ 
 
   ],
   imports: [
@@ -47,7 +50,7 @@ import { HttpClientModule } from '@angular/common/http';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

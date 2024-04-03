@@ -25,36 +25,41 @@ export class SigninComponent {
 
       
     });
-
-
-    
-signIn(registerForm:FormGroup){
-  this.isLoading=true
-
-  this._Auth.signIn(this.LoginForm.value).subscribe(
-    (Response: any) => {
-      if (Response.message == "success") {
-        let token=''
-        let headers = new HttpHeaders();
-        headers = headers.set('Authorization', `Bearer ${token}`);
-        localStorage.setItem('userToken', Response.user.token);
-
-        this._Auth.decodedUserData();
-        this._Router.navigate(['./home']);
-      }
-      console.log(Response);
-      
-      this._Auth.sharedVariable = Response.user.displayName; 
-      this.isLoading = false;
-    },
-    (err) => {
-      console.log(err);
-      this.isLoading = false;
-    }
-  );
-  
-  
  
-}
+    onSubmit() {
+      this._Auth.signIn(this.LoginForm.value).subscribe(() => {
+        this._Router.navigate(['./home']);
+        console.log("success")
+ 
+      }, 
+      
+      error => {
+        console.log(error);
+      })
+    }
+ 
+
+  
+    // signIn(registerForm: FormGroup) {
+    //   this.isLoading = true;
+    
+    //   this._Auth.signIn(this.LoginForm.value).subscribe(
+    //     (success: boolean) => {
+    //       if (success) {
+    //         this._Router.navigate(['/home']); // توجيه بعد تسجيل الدخول إلى الصفحة المناسبة
+    //       } else {
+    //         console.log("Failed to sign in");
+    //         // يمكنك إضافة رسالة للمستخدم أو تنبيه هنا في حالة عدم نجاح تسجيل الدخول
+    //       }
+    //       this.isLoading = false;
+    //     },
+    //     (err) => {
+    //       console.log(err);
+    //       this.isLoading = false;
+    //     }
+    //   );
+    // }
+ 
+ 
  
 }

@@ -20,7 +20,10 @@ export class SearchComponent implements OnInit {
    
 
   logMessage() {
+    
+    this._Auth.decodedUserData()
     this.message = this._Auth.sharedVariable;
+    console.log(this.message)
     }
     
 }
